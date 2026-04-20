@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kocaeli Haber Haritası</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <!-- SOL PANEL -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <div class="header-top">
+                    <div class="header-dot"></div>
+                    <h1>Kocaeli Haber Haritası</h1>
+                </div>
+                <button id="scrape-btn" class="btn">Verileri Güncelle</button>
+            </header>
+
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label>Haber Türü</label>
+                    <div class="badge-filters" id="type-filters">
+                        <div class="filter-badge active badge-kaza" data-val="TRAFİK_KAZASI">Trafik Kazası</div>
+                        <div class="filter-badge active badge-yangin" data-val="YANGIN">Yangın</div>
+                        <div class="filter-badge active badge-elektrik" data-val="ELEKTRİK_KESİNTİSİ">Elektrik Kesintisi
+                        </div>
+                        <div class="filter-badge active badge-hirsizlik" data-val="HIRSIZLIK">Hırsızlık</div>
+                        <div class="filter-badge active badge-kulturel" data-val="KÜLTÜREL_ETKİNLİK">Etkinlikler</div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label>İlçe</label>
+                    <select id="district-filter" class="form-input">
+                        <option value="">Tüm İlçeler</option>
+                        <option value="İzmit">İzmit</option>
+                        <option value="Gebze">Gebze</option>
+                        <option value="Gölcük">Gölcük</option>
+                        <option value="Kandıra">Kandıra</option>
+                        <option value="Karamürsel">Karamürsel</option>
+                        <option value="Kartepe">Kartepe</option>
+                        <option value="Derince">Derince</option>
+                        <option value="Başiskele">Başiskele</option>
+                        <option value="Çayırova">Çayırova</option>
+                        <option value="Darıca">Darıca</option>
+                        <option value="Dilovası">Dilovası</option>
+                        <option value="Körfez">Körfez</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Tarih Aralığı</label>
+                    <div class="date-inputs">
+                        <input type="date" id="date-start" class="form-input" title="Başlangıç">
+                        <span>—</span>
+                        <input type="date" id="date-end" class="form-input" title="Bitiş">
+                    </div>
+                </div>
+            </section>
+
+            <section class="news-section">
+                <div class="section-title">
+                    <h3>Son Haberler · <span id="news-count">0</span> sonuç</h3>
+                </div>
+                <div id="news-list" class="news-list">
+                    <div class="loading">Yükleniyor...</div>
+                </div>
+            </section>
+        </aside>
+
+        <!-- SAĞ PANEL: HARİTA -->
+        <main class="map-container">
+            <div id="map"></div>
+        </main>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATk4d_QD0wMjdYP0uuVr9abJil5VpDYeg&callback=initMap"
+        async defer></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

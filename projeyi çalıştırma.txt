@@ -1,0 +1,6 @@
+Terminal 1 - API:
+uvicorn api.main:app --reload
+
+Terminal 2 - Frontend:
+cd frontend
+python -m http.server 3000
