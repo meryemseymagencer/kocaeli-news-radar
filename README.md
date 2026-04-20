@@ -1,63 +1,33 @@
-\# 📍 Kocaeli Kentsel Haber İzleme Sistemi
-
-
+# 📍 Kocaeli Kentsel Haber İzleme Sistemi
 
 Bu proje, Kocaeli yerel haberlerini 5 farklı kaynaktan otomatik olarak çeken, temizleyen, sınıflandıran ve Google Maps üzerinde görselleştiren web scraping tabanlı bir izleme sistemidir. Proje, doğal dil işleme (NLP) teknikleri ile metinlerden konum verisi çıkarır ve makine öğrenmesi modelleriyle haberleri kategorize eder.
 
+## 🚀 Özellikler
 
+* **Otomatik Veri Çekme:** Belirlenen 5 farklı yerel haber sitesinden son 3 günlük haberlerin düzenli olarak toplanması.
+* **Akıllı Çift Kayıt (Duplicate) Engelleme:** Sadece URL kontrolü değil, `sentence-transformers` (`paraphrase-multilingual-MiniLM-L12-v2`) modeli kullanılarak haber içeriklerinin embedding benzerliğinin (Cosine Similarity %90 ve üzeri) ölçülmesi. Aynı olay farklı sitelerde haberleştirilmişse sistem bunu tek bir kayıt olarak tutar ve kaynakları birleştirir.
+* **Otomatik Kategori Sınıflandırması:** Haberlerin içerik analizine göre "Trafik Kazası", "Yangın", "Elektrik Kesintisi", "Hırsızlık" veya "Kültürel Etkinlikler" olarak öncelik sırasına göre etiketlenmesi.
+* **NLP ile Konum Çıkarımı:** `spaCy` kullanılarak metin içerisinden Varlık İsmi Tanıma (NER) yöntemiyle sokak, mahalle ve ilçe gibi lokasyon verilerinin çıkarılması.
+* **Geocoding ve Veritabanı Önbellekleme (Caching):** Google Geocoding API ile adreslerin koordinatlara dönüştürülmesi. API maliyetlerini düşürmek ve hızı artırmak için sık kullanılan konumların MongoDB üzerinde önbelleğe alınması (cache).
+* **Dinamik Harita Gösterimi:** Haber türüne göre özel renklendirilmiş işaretçilerle olayların Google Maps üzerinde gerçek zamanlı ve filtrelenebilir şekilde gösterilmesi.
 
-\## 🚀 Özellikler
-
-
-
-\* \*\*Otomatik Veri Çekme:\*\* Belirlenen 5 farklı yerel haber sitesinden son 3 günlük haberlerin düzenli olarak toplanması.
-
-\* \*\*Akıllı Çift Kayıt (Duplicate) Engelleme:\*\* Sadece URL kontrolü değil, `sentence-transformers` (`paraphrase-multilingual-MiniLM-L12-v2`) modeli kullanılarak haber içeriklerinin embedding benzerliğinin (Cosine Similarity %90 ve üzeri) ölçülmesi. Aynı olay farklı sitelerde haberleştirilmişse sistem bunu tek bir kayıt olarak tutar ve kaynakları birleştirir.
-
-\* \*\*Otomatik Kategori Sınıflandırması:\*\* Haberlerin içerik analizine göre "Trafik Kazası", "Yangın", "Elektrik Kesintisi", "Hırsızlık" veya "Kültürel Etkinlikler" olarak öncelik sırasına göre etiketlenmesi.
-
-\* \*\*NLP ile Konum Çıkarımı:\*\* `spaCy` kullanılarak metin içerisinden Varlık İsmi Tanıma (NER) yöntemiyle sokak, mahalle ve ilçe gibi lokasyon verilerinin çıkarılması.
-
-\* \*\*Geocoding ve Veritabanı Önbellekleme (Caching):\*\* Google Geocoding API ile adreslerin koordinatlara dönüştürülmesi. API maliyetlerini düşürmek ve hızı artırmak için sık kullanılan konumların MongoDB üzerinde önbelleğe alınması (cache).
-
-\* \*\*Dinamik Harita Gösterimi:\*\* Haber türüne göre özel renklendirilmiş işaretçilerle olayların Google Maps üzerinde gerçek zamanlı ve filtrelenebilir şekilde gösterilmesi.
-
-
-
-\## 🛠️ Mimari ve Veri Akışı
-
-
+## 🛠️ Mimari ve Veri Akışı
 
 Sistem şu boru hattı (pipeline) üzerinden çalışır:
+`[Scraper] → [Temizleme] → [Sınıflandırma] → [Konum Çıkarımı] → [Geocoding] → [MongoDB] → [REST API] → [Frontend + Harita]`
 
-`\[Scraper] → \[Temizleme] → \[Sınıflandırma] → \[Konum Çıkarımı] → \[Geocoding] → \[MongoDB] → \[REST API] → \[Frontend + Harita]`
+## 💻 Teknoloji Yığını (Tech Stack)
 
+* **Veri Kazıma & İşleme (Python):** `requests`, `BeautifulSoup4`, `Selenium`, `spaCy`, `sentence-transformers`.
+* **Backend:** REST API mimarisi (FastAPI / Express.js).
+* **Veritabanı:** MongoDB (Geospatial sorgular ve metin indeksleme için).
+* **Frontend:** Vanilla JS, Google Maps JS API.
 
+## ⚙️ Kurulum ve Çalıştırma
 
-\## 💻 Teknoloji Yığını (Tech Stack)
-
-
-
-\* \*\*Veri Kazıma \& İşleme (Python):\*\* `requests`, `BeautifulSoup4`, `Selenium`, `spaCy`, `sentence-transformers`.
-
-\* \*\*Backend:\*\* REST API mimarisi (FastAPI / Express.js).
-
-\* \*\*Veritabanı:\*\* MongoDB (Geospatial sorgular ve metin indeksleme için).
-
-\* \*\*Frontend:\*\* Vanilla JS, Google Maps JS API.
-
-
-
-\## ⚙️ Kurulum ve Çalıştırma
-
-
-
-1\. Depoyu bilgisayarınıza klonlayın:
-
+1. Depoyu bilgisayarınıza klonlayın:
 ```bash
-
-git clone \[https://github.com/kullanici-adin/kocaeli-news-scraper.git](https://github.com/kullanici-adin/kocaeli-news-scraper.git)
-
+git clone [https://github.com/kullanici-adin/kocaeli-news-scraper.git](https://github.com/kullanici-adin/kocaeli-news-scraper.git)
 cd kocaeli-news-scraper
 
 2. Gerekli Python kütüphanelerini yükleyin:
